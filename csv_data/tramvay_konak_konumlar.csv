@@ -1,25 +1,25 @@
-ISTASYON_ADI;ENLEM;BOYLAM
-Halkapınar;38.43405;27.17199
-Havagazı;38.43974;27.15824
-Alsancak Stadyumu;38.43821;27.152
-Üniversite;38.43724;27.16084
-Alsancak Gar;38.43961;27.14813
-Atatürk Kapalı Spor Salonu;38.43467;27.14721
-Hocazade Camii;38.43305;27.14407
-Kültürpark;38.42922;27.14146
-Gazi Bulvarı;38.42417;27.13703
-Konak İskele;38.41883;27.12725
-Karataş;38.41055;27.11875
-Karantina;38.40786;27.10563
-Köprü Sağ Peron;38.40583;27.09872
-Köprü Sol Peron;38.40601;27.09852
-Sadıkbey Sağ Peron;38.40327;27.0959
-Sadıkbey Sol Peron;38.40317;27.09533
-Göztepe Sağ Peron;38.40025;27.09166
-Göztepe Sol Peron;38.40064;27.09159
-Güzelyalı Sağ Peron;38.39843;27.08486
-Güzelyalı Sol Peron;38.39938;27.08307
-Ahmet Adnan Saygun S.M. Sağ Peron;38.40048;27.07713
-Ahmet Adnan Saygun S.M. Sol Peron;38.40067;27.07793
-Üçkuyular;38.40312;27.07152
-Fahrettin Altay;38.39796;27.06944
+ISTASYON_ID;ISTASYON_ADI;ENLEM;BOYLAM
+40;Halkapınar;3.843.405;2.717.199
+41;Havagazı;3.843.974;2.715.824
+42;Alsancak Stadyumu;3.843.821;27.152
+43;Üniversite;3.843.724;2.716.084
+44;Alsancak Gar;3.843.961;2.714.813
+45;Atatürk Kapalı Spor Salonu;3.843.467;2.714.721
+46;Hocazade Camii;3.843.305;2.714.407
+47;Kültürpark;3.842.922;2.714.146
+48;Gazi Bulvarı;3.842.417;2.713.703
+49;Konak İskele;3.841.883;2.712.725
+50;Karataş;3.841.055;2.711.875
+51;Karantina;3.840.786;2.710.563
+52;Köprü Sağ Peron;3.840.583;2.709.872
+53;Köprü Sol Peron;3.840.601;2.709.852
+54;Sadıkbey Sağ Peron;3.840.327;270.959
+55;Sadıkbey Sol Peron;3.840.317;2.709.533
+56;Göztepe Sağ Peron;3.840.025;2.709.166
+57;Göztepe Sol Peron;3.840.064;2.709.159
+58;Güzelyalı Sağ Peron;3.839.843;2.708.486
+59;Güzelyalı Sol Peron;3.839.938;2.708.307
+60;Ahmet Adnan Saygun S.M. Sağ Peron;3.840.048;2.707.713
+61;Ahmet Adnan Saygun S.M. Sol Peron;3.840.067;2.707.793
+62;Üçkuyular;3.840.312;2.707.152
+63;Fahrettin Altay;3.839.796;2.706.944
