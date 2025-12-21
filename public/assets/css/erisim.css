@@ -1,0 +1,79 @@
+.analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    margin-top: 20px;
+    align-items: stretch; 
+}
+
+/* Kartlar */
+.info-cards {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    flex: 1;
+    border-left: 5px solid #3498db;
+}
+.big-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2c3e50;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Grafik ve Harita Kutuları */
+.chart-container, .map-container-access {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.panel-header {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+.panel-header h3 { margin: 0; color: #2c3e50; }
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Grafiklerin içinde bulunduğu kutu */
+.chart-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    min-width: 0; 
+}
+
+/* Başlık */
+.panel-header {
+    margin-bottom: 15px;
+    flex-shrink: 0; /* Başlık küçülmesin */
+}
+
+.chart-wrapper {
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}

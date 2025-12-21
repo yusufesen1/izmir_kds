@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>İzmir Ulaşım KDS</title>
-    
+    <title>Rota35</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    
+    <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 </head>
 <body>
-
     <div class="dashboard-container">
         <nav class="sidebar">
             <div class="logo">
@@ -22,38 +19,28 @@
                 </div>
                 <div style="width: 100%; height: 3px; background: linear-gradient(90deg, rgba(241, 196, 15, 0.1) 0%, #f1c40f 50%, rgba(241, 196, 15, 0.1) 100%); margin-top: 4px; border-radius: 2px; opacity: 0.8;"></div>
             </div>
-
             <ul>
-                <li class="active">📊 Durum Paneli</li>
-                <li>⚖️ Erişim & Adalet</li>
-                <li>🔮 Gelecek Tahmini</li>
-                <li>⚙️ Operasyon</li>
-                <li>🧪 Senaryo Lab</li>
+                <li class="active"><a href="/">📊 Durum Paneli</a></li>
+                <li><a href="/erisim">⚖️ Erişim & Adalet</a></li>
+                <li><a href="/gelecek">🔮 Gelecek Tahmini</a></li>
+                <li><a href="operasyon.html">⚙️ Operasyon</a></li>
+                <li><a href="senaryo.html">🧪 Senaryo Lab</a></li>
             </ul>
         </nav>
-
         <main class="content">
-            
             <header class="top-header">
                 <div class="header-title">
                     <h1>İzmir Ulaşım Karar Destek Sistemi</h1>
                     <p>Veri Odaklı Stratejik Planlama Platformu</p>
                 </div>
-                
                 <div class="user-profile-pill">
                     <div class="user-avatar-circle">YY</div>
                     <div class="user-details">
                         <span class="user-name-text" id="user-full-name">Yükleniyor...</span>
                         <span class="user-role-text">Yönetici</span>
                     </div>
-                    <button class="logout-icon-btn" onclick="alert('Çıkış yapılıyor...')" title="Çıkış Yap">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                        </svg>
-                    </button>
                 </div>
             </header>
-
             <div class="welcome-banner">
                 <div class="banner-content">
                     <h2 id="welcome-message">Hoş geldin, Kullanıcı 👋</h2>
@@ -61,15 +48,9 @@
                         Sistem, İzmir genelindeki <strong>Metro, Tramvay, İZBAN ve ESHOT</strong> verilerini analiz ederek 
                         anlık yoğunluk haritaları, kapasite riskleri ve optimizasyon fırsatları sunmaktadır.
                     </p>
-                    <div class="banner-actions">
-                        <button class="action-btn primary">📊 Anlık Durum Raporu</button>
-                        <button class="action-btn secondary">🤖 AI Risk Tespiti</button>
-                        <button class="action-btn secondary">📍 Hat Planlama</button>
-                    </div>
                 </div>
                 <div class="banner-icon">🚇</div>
             </div>
-
             <div class="stats-grid">
                 <div class="stat-card eshot">
                     <div class="stat-icon">🚌</div>
@@ -104,7 +85,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="maps-container">
                 <div class="map-card">
                     <div class="map-header">
@@ -113,7 +93,6 @@
                     </div>
                     <div id="map-champ" class="mini-map"></div>
                 </div>
-
                 <div class="map-card">
                     <div class="map-header">
                         <h3>🔥 Bölgesel Yoğunluk (Heatmap)</h3>
@@ -122,10 +101,31 @@
                     <div id="map-heat" class="mini-map"></div>
                 </div>
             </div>
-
+            <div class="table-card">
+                <div class="table-header">
+                    <h3>📊 En Yoğun 10 İstasyon & Durak</h3>
+                    <button class="export-btn">Excel İndir 📥</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th width="50">#</th>
+                                <th>Ulaşım Türü</th>
+                                <th>Durak / İstasyon Adı</th>
+                                <th>Hat No</th>
+                                <th class="text-center">Toplam Yolcu</th>
+                                <th>Yoğunluk</th>
+                            </tr>
+                        </thead>
+                        <tbody id="top10-body">
+                            <tr><td colspan="6" style="text-align:center">Veriler yükleniyor...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </main>
     </div>
-
-    <script src="script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>

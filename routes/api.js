@@ -4,14 +4,12 @@ const pool = require('../db');
 // 1. ISI HARİTASI
 router.get('/heatmap', async (req, res) => {
   try {
-    // Tüm durakları ve yoğunluklarını çekiyoruz
     const sorgu = `
-      SELECT d.enlem, d.boylam, COUNT(*) as yogunluk
+      SELECT d.durak_adi, d.enlem, d.boylam, yh.hat_no, COUNT(*) as yogunluk
       FROM yolcu_hareketleri yh
       JOIN duraklar d ON yh.durak_id = d.durak_id
-      GROUP BY d.durak_id, d.enlem, d.boylam
-      HAVING COUNT(*) > 50 -- Sadece kalabalık yerleri gösterelim ki harita çok kırmızılanmasın
-      LIMIT 3000;
+      GROUP BY d.durak_id, d.durak_adi, d.enlem, d.boylam, yh.hat_no
+      ORDER BY yogunluk DESC LIMIT 2000;
     `;
     const sonuc = await pool.query(sorgu);
     res.json(sonuc.rows);
@@ -21,7 +19,7 @@ router.get('/heatmap', async (req, res) => {
   }
 });
 
-// 2. YILLIK ÖZET (Burada zaten sorun yoktu ama kontrol ettik)
+// 2. YILLIK ÖZET
 router.get('/yillik-ozet', async (req, res) => {
   try {
     const sorgu = `
@@ -44,10 +42,9 @@ router.get('/yillik-ozet', async (req, res) => {
   }
 });
 
-// 3. TOP DURAKLAR (DÜZELTİLDİ: d.hat_no -> yh.hat_no)
+// 3. TOP DURAKLAR (Sol Harita)
 router.get('/top-duraklar', async (req, res) => {
   try {
-    // Burada d.hat_no yerine yh.hat_no kullanarak filtreleme yapıyoruz
     const sorgu = `
       (SELECT 'METRO' as tur, d.durak_adi, d.enlem, d.boylam, count(*) as sayi 
        FROM yolcu_hareketleri yh JOIN duraklar d ON yh.durak_id = d.durak_id 
@@ -81,23 +78,30 @@ router.get('/top-duraklar', async (req, res) => {
   }
 });
 
-// 4. GÜZERGAH (Sağ Harita - Gidiş/Dönüş Ayrımı Eklendi)
-router.get('/hat-guzergah', async (req, res) => {
+// 4. TOP 10 LİSTESİ (Tablo İçin - EKSİK OLAN KISIM BURASIYDI)
+router.get('/top-liste', async (req, res) => {
   try {
-    // DİKKAT: 'hd.yon' sütunu olduğunu varsayıyoruz. 
-    // Eğer tablonda bu sütunun adı farklıysa (örn: direction, guzergah_tipi) burayı düzelt!
     const sorgu = `
-      SELECT h.hat_no, d.enlem, d.boylam, hd.sira_no, hd.yon
-      FROM hat_duraklari hd
-      JOIN duraklar d ON hd.durak_id = d.durak_id
-      JOIN hatlar h ON hd.hat_no = h.hat_no
-      WHERE h.hat_no IN ('290', '390', '490', '515', '470', '680') 
-      ORDER BY h.hat_no, hd.yon, hd.sira_no;
+      SELECT 
+        d.durak_adi, 
+        yh.hat_no, 
+        COUNT(*) as toplam_yolcu,
+        CASE 
+          WHEN yh.hat_no = 'METRO' THEN 'METRO'
+          WHEN yh.hat_no = 'IZBAN' THEN 'IZBAN'
+          WHEN yh.hat_no LIKE '%TRAM%' THEN 'TRAMVAY'
+          ELSE 'ESHOT' 
+        END as tur
+      FROM yolcu_hareketleri yh
+      JOIN duraklar d ON yh.durak_id = d.durak_id
+      GROUP BY d.durak_adi, yh.hat_no
+      ORDER BY toplam_yolcu DESC
+      LIMIT 10;
     `;
     const sonuc = await pool.query(sorgu);
     res.json(sonuc.rows);
   } catch (err) {
-    console.error("Güzergah SQL Hatası:", err.message);
+    console.error("Tablo SQL Hatası:", err.message);
     res.status(500).json([]);
   }
 });

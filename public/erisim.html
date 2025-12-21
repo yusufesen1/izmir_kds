@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rota35</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css"> 
+    <link rel="stylesheet" href="assets/css/erisim.css"> 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> 
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <div style="display: flex; align-items: baseline; gap: 6px; font-size: 26px; font-weight: 800; color: white;">
+                    Rota <span style="font-size: 28px; position: relative; top: 2px;">🚇</span> <span style="color: #f1c40f;">35</span>
+                </div>
+                <div style="width: 100%; height: 3px; background: linear-gradient(90deg, rgba(241, 196, 15, 0.1) 0%, #f1c40f 50%, rgba(241, 196, 15, 0.1) 100%); margin-top: 4px; border-radius: 2px; opacity: 0.8;"></div>
+            </div>
+            <ul>
+                <li><a href="index.html">📊 Durum Paneli</a></li>
+                <li class="active"><a href="erisim.html">⚖️ Erişim & Adalet</a></li>
+                <li><a href="gelecek.html">🔮 Gelecek Tahmini</a></li>
+                <li><a href="operasyon.html">⚙️ Operasyon</a></li>
+                <li><a href="senaryo.html">🧪 Senaryo Lab</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Erişim ve Sosyal Adalet Analizi</h1>
+                    <p>İlçelerin Nüfus, Durak ve Yolcu Yoğunluğu İlişkisi</p>
+                </div>
+            </header>
+            <div class="info-cards">
+                <div class="card">
+                    <h3>👥 Kapsanan Nüfus</h3>
+                    <span class="big-number">2.8M</span>
+                </div>
+                <div class="card">
+                    <h3>⚠️ Riskli Bölge</h3>
+                    <span id="risk-count" class="big-number">...</span>
+                    <span class="sub-text">Yetersiz durak sayısı (Yoğunluk > 600)</span>
+                </div>
+            </div>
+            <div class="analysis-grid">  
+                <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>📈 Nüfus vs. Durak Dağılımı</h3>
+                        <p style="font-size:12px; color:#666;">Sadece nüfus verisi bulunan ilçeler gösterilmektedir.</p>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>📊 Durak Yoğunluk Analizi</h3>
+                        <span class="badge" style="background:#8e44ad; color:white;">1 Durağa Düşen Nüfus</span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="ratioChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>🗺️ İlçe Bazlı Erişim Riski</h3>
+                        <div style="display:flex; gap:10px; font-size:12px;">
+                            <span style="display:flex; align-items:center;"><span style="width:10px; height:10px; background:#2ecc71; margin-right:5px; border-radius:50%;"></span>Rahat</span>
+                            <span style="display:flex; align-items:center;"><span style="width:10px; height:10px; background:#e74c3c; margin-right:5px; border-radius:50%;"></span>Riskli</span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <div id="choroplethMap" style="width: 100%; height: 100%; border-radius: 8px; z-index: 1;"></div>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>🎓 Öğrencilerin Favori Durakları</h3>
+                        <span class="badge" style="background:#9b59b6; color:white;">En Yoğun 8 Nokta</span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="studentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/erisim.js"></script>
+</body>
+</html>

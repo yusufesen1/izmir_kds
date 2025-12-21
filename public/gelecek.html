@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rota35</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css"> 
+    <link rel="stylesheet" href="assets/css/gelecek.css"> <link rel="stylesheet" href="gelecek.css"> <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="logo">
+                <div style="display: flex; align-items: baseline; gap: 6px; font-size: 26px; font-weight: 800; color: white;">
+                    Rota <span style="font-size: 28px; position: relative; top: 2px;">🚇</span> <span style="color: #f1c40f;">35</span>
+                </div>
+                <div style="width: 100%; height: 3px; background: linear-gradient(90deg, rgba(241, 196, 15, 0.1) 0%, #f1c40f 50%, rgba(241, 196, 15, 0.1) 100%); margin-top: 4px; border-radius: 2px; opacity: 0.8;"></div>
+            </div>
+            <ul>
+                <li><a href="index.html">📊 Durum Paneli</a></li>
+                <li><a href="erisim.html">⚖️ Erişim & Adalet</a></li>
+                <li class="active"><a href="gelecek.html">🔮 Gelecek Tahmini</a></li>
+                <li><a href="operasyon.html">⚙️ Operasyon</a></li>
+                <li><a href="senaryo.html">🧪 Senaryo Lab</a></li>
+            </ul>
+        </nav>
+        <main class="content">
+            <header class="top-header">
+                <div class="header-title">
+                    <h1>Stratejik Kapasite Planlama</h1>
+                    <p>Yapay Zeka Destekli 12 Aylık Projeksiyon</p>
+                </div>
+            </header>
+            <div class="scenario-panel">
+                <div>
+                    <h3>🎛️ Simülasyon Ayarı</h3>
+                    <p style="font-size: 13px; opacity: 0.8;">Beklenen aylık büyüme oranını değiştirin.</p>
+                </div>
+                <div class="slider-container">
+                    <div class="slider-label">
+                        <span>Stabil (%0)</span>
+                        <span id="growthValue" style="color: #f1c40f;">+%2.0 Aylık Büyüme</span>
+                        <span>Patlama (%5)</span>
+                    </div>
+                    <input type="range" id="growthSlider" min="0" max="5" step="0.1" value="2.0">
+                </div>
+                <div class="prediction-badge">
+                    <h4>Tahmini Çöküş Tarihi</h4>
+                    <div id="crashDate">--</div>
+                </div>
+            </div>
+            <div class="analysis-grid" style="grid-template-columns: 2fr 1fr;"> <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>📈 Kapasite vs. Talep Tahmini (12 Ay)</h3>
+                        <span class="badge" style="background:#e67e22; color:white;">Lineer Regresyon</span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="projectionChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="panel-header">
+                        <h3>🏙️ Bölgesel Yük Dağılımı</h3>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container" style="grid-column: span 2;">
+                    <div class="panel-header">
+                        <h3>💰 Finansal Etki Analizi (Gelir vs. Maliyet)</h3>
+                        <div style="display:flex; gap:15px; font-size:12px;">
+                            <span style="display:flex; align-items:center;">
+                                <span style="width:12px; height:12px; background:#27ae60; margin-right:5px; border-radius:2px;"></span>Tahmini Gelir
+                            </span>
+                            <span style="display:flex; align-items:center;">
+                                <span style="width:12px; height:2px; background:#c0392b; margin-right:5px;"></span>Operasyonel Gider
+                            </span>
+                        </div>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="financialChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="assets/js/gelecek.js"></script>
+</body>
+</html>
