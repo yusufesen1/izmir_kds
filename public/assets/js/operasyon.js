@@ -1,55 +1,92 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const baseData = await fetch('/api/operation/base-metrics').then(res => res.json());
-
-    updateDashboard(0, baseData);
-    initChart(baseData);
-
-    const slider = document.getElementById('freqSlider');
-    const display = document.getElementById('sliderDisplay');
-
-    slider.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-
-        if(val > 0) {
-            display.innerText = `Artış (+%${val})`;
-            display.style.color = '#27ae60';
-        } else if (val < 0) {
-            display.innerText = `Azalış (%${val})`;
-            display.style.color = '#c0392b';
-        } else {
-            display.innerText = `Stabil (%0)`;
-            display.style.color = '#2c3e50';
+    try {
+        // 1. Backend'den Baz Verileri Çek
+        const response = await fetch('/api/operation/base-metrics');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP hatası! Durum: ${response.status}`);
         }
+        
+        const baseData = await response.json();
+        console.log("Operasyon Verisi Geldi:", baseData); // Kontrol için
 
-        updateDashboard(val, baseData);
-        updateChart(val, baseData);
-    });
+        // 2. Başlangıç Durumu
+        updateDashboard(0, baseData);
+        initChart(baseData);
+
+        // 3. Slider Olayı
+        const slider = document.getElementById('freqSlider');
+        const display = document.getElementById('sliderDisplay');
+
+        if (slider) {
+            slider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                
+                // Etiket Rengi ve Yazısı
+                if(val > 0) {
+                    display.innerText = `Artış (+%${val})`;
+                    display.style.color = '#27ae60';
+                } else if (val < 0) {
+                    display.innerText = `Azalış (%${val})`;
+                    display.style.color = '#c0392b';
+                } else {
+                    display.innerText = `Stabil (%0)`;
+                    display.style.color = '#2c3e50';
+                }
+
+                // Tüm hesaplamaları güncelle
+                updateDashboard(val, baseData);
+                updateChart(val, baseData);
+            });
+        }
+    } catch (error) {
+        console.error("Operasyon Verisi Çekilemedi:", error);
+    }
 });
 
 let simChart = null;
 
 // --- MATEMATİKSEL HESAPLAMALAR ---
 function updateDashboard(changePercent, base) {
+    // Çarpan (Örn: %20 artış -> 1.2)
     const factor = 1 + (changePercent / 100);
 
-    const newWait = base.ortalama_bekleme / factor;
-    updateKPI('kpi-wait', 'diff-wait', newWait.toFixed(1) + ' dk', base.ortalama_bekleme, true); /
+    // 1. BEKLEME SÜRESİ (Ters Orantı)
+    if (base.ortalama_bekleme) {
+        const newWait = base.ortalama_bekleme / factor;
+        updateKPI('kpi-wait', 'diff-wait', newWait.toFixed(1) + ' dk', base.ortalama_bekleme, true);
+    }
 
-    const newCost = base.operasyon_maliyeti * factor;
-    updateKPI('kpi-cost', 'diff-cost', newCost.toFixed(0) + ' Birim', base.operasyon_maliyeti, false); 
+    // 2. MALİYET (Doğru Orantı)
+    if (base.operasyon_maliyeti) {
+        const newCost = base.operasyon_maliyeti * factor;
+        updateKPI('kpi-cost', 'diff-cost', newCost.toFixed(0) + ' Birim', base.operasyon_maliyeti, false);
+    }
 
-    let newCrowd = base.ortalama_doluluk / factor;
-    if(newCrowd > 100) newCrowd = 100; 
-    updateKPI('kpi-crowd', 'diff-crowd', '%' + newCrowd.toFixed(0), base.ortalama_doluluk, true);
+    // 3. DOLULUK (Ters Orantı)
+    if (base.ortalama_doluluk) {
+        let newCrowd = base.ortalama_doluluk / factor;
+        if(newCrowd > 100) newCrowd = 100; // %100'ü geçemez
+        updateKPI('kpi-crowd', 'diff-crowd', '%' + newCrowd.toFixed(0), base.ortalama_doluluk, true);
+    }
 }
 
+// Kartları Boyayan Fonksiyon
 function updateKPI(valId, diffId, text, baseVal, lowerIsBetter) {
     const elVal = document.getElementById(valId);
     const elDiff = document.getElementById(diffId);
     
+    if (!elVal || !elDiff) return;
+
     elVal.innerText = text;
 
-    const currentNum = parseFloat(text.replace(/[^0-9.]/g, ''));
+    // --- HATA VEREN KISIM DÜZELTİLDİ ---
+    // RegEx yerine daha basit bir temizleme yapıyoruz
+    // Sadece rakamları ve noktayı al
+    let cleanText = text.replace('%', '').replace(' dk', '').replace(' Birim', '');
+    const currentNum = parseFloat(cleanText);
+    
+    // Farkı hesapla
     const diff = ((currentNum - baseVal) / baseVal) * 100;
     
     if (Math.abs(diff) < 1) {
@@ -61,6 +98,7 @@ function updateKPI(valId, diffId, text, baseVal, lowerIsBetter) {
     const diffText = diff > 0 ? `▲ %${Math.abs(diff).toFixed(0)}` : `▼ %${Math.abs(diff).toFixed(0)}`;
     elDiff.innerText = diffText;
 
+    // Renk Kararı
     if (lowerIsBetter) {
         elDiff.className = diff < 0 ? "diff positive" : "diff negative";
     } else {
@@ -68,8 +106,13 @@ function updateKPI(valId, diffId, text, baseVal, lowerIsBetter) {
     }
 }
 
+// --- GRAFİK YÖNETİMİ ---
 function initChart(base) {
-    const ctx = document.getElementById('simulationChart').getContext('2d');
+    const ctxElement = document.getElementById('simulationChart');
+    if (!ctxElement) return;
+
+    const ctx = ctxElement.getContext('2d');
+    
     const hours = ['06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00'];
     const baseProfile = [15, 25, 12, 10, 12, 15, 30, 15, 20]; 
     
@@ -84,14 +127,14 @@ function initChart(base) {
                     label: 'Mevcut Durum',
                     data: baseProfile,
                     borderColor: '#95a5a6',
-                    borderDash: [5, 5], 
+                    borderDash: [5, 5],
                     borderWidth: 2,
                     tension: 0.4,
                     pointRadius: 0
                 },
                 {
                     label: 'Simülasyon (Yeni)',
-                    data: [...baseProfile], 
+                    data: [...baseProfile],
                     borderColor: '#3498db',
                     backgroundColor: 'rgba(52, 152, 219, 0.2)',
                     fill: true,
@@ -114,6 +157,8 @@ function initChart(base) {
 }
 
 function updateChart(changePercent, base) {
+    if (!simChart) return;
+
     const factor = 1 + (changePercent / 100);
     const newProfile = base.chartProfile.map(val => val / factor);
     
