@@ -1,6 +1,6 @@
 const currentUser = { 
-    ad: "Yusuf", 
-    soyad: "Yılmaz", 
+    ad: "Yusuf Mıraz", 
+    soyad: "Esen", 
     rol: "Yönetici" 
 };
 
