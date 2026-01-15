@@ -3,7 +3,7 @@ const pool = require('../db/db');
 exports.getBaseMetrics = async (req, res) => {
     try {
         const hatSorgu = `SELECT COUNT(DISTINCT durak_id) as durak_sayisi FROM yolcu_hareketleri`;
-        await pool.query(hatSorgu); // Sonucu kullanmamışsın ama sorguyu tuttum
+        await pool.query(hatSorgu);
         
         const yolcuSorgu = `SELECT COUNT(*) as toplam FROM yolcu_hareketleri`;
         await pool.query(yolcuSorgu);

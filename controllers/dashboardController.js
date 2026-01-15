@@ -49,7 +49,7 @@ exports.getTopStops = async (req, res) => {
         const sonuc = await pool.query(sorgu);
         res.json(sonuc.rows);
     } catch (err) {
-        console.error("🏆 Top Duraklar SQL Hatası:", err.message);
+        console.error("Top Duraklar SQL Hatası:", err.message);
         res.status(500).json([]);
     }
 };

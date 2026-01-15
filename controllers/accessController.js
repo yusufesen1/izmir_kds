@@ -1,6 +1,5 @@
 const pool = require('../db/db');
 
-// Yardımcı Fonksiyon (Sadece bu dosyada kullanılır)
 const isimTemizle = (text) => {
     if (!text) return "";
     let temiz = text.toString().toUpperCase('tr-TR');
@@ -40,7 +39,7 @@ exports.getScatterData = async (req, res) => {
         finalVeri.sort((a, b) => b.nufus - a.nufus);
         res.json(finalVeri);
     } catch (err) {
-        console.error("❌ Scatter API Hatası:", err.message);
+        console.error("Scatter API Hatası:", err.message);
         res.status(500).json([]);
     }
 };
@@ -61,7 +60,7 @@ exports.getMapData = async (req, res) => {
         }));
         res.json(mapData);
     } catch (err) {
-        console.error("❌ Harita API Hatası:", err.message);
+        console.error("Harita API Hatası:", err.message);
         res.status(500).json([]);
     }
 };
@@ -79,7 +78,7 @@ exports.getStudentStops = async (req, res) => {
         const sonuc = await pool.query(sorgu);
         res.json(sonuc.rows);
     } catch (err) {
-        console.error("❌ Öğrenci API Hatası:", err.message);
+        console.error("Öğrenci API Hatası:", err.message);
         res.status(500).json([]);
     }
 };

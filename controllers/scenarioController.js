@@ -2,7 +2,7 @@ const pool = require('../db/db');
 
 exports.analyzeRoute = async (req, res) => {
     const { lat1, lng1, lat2, lng2 } = req.body;
-    console.log(`📡 Analiz İsteği: A(${lat1}, ${lng1}) -> B(${lat2}, ${lng2})`);
+    console.log(`Analiz İsteği: A(${lat1}, ${lng1}) -> B(${lat2}, ${lng2})`);
 
     try {
         const getDistrictInfo = async (lat, lng, label) => {
@@ -15,7 +15,7 @@ exports.analyzeRoute = async (req, res) => {
             
             const district = distResult.rows[0];
             const ilceAdi = district.ilce_adi;
-            console.log(`📍 ${label} Tespit Edildi: ${ilceAdi}`);
+            console.log(`${label} Tespit Edildi: ${ilceAdi}`);
 
             const queryStats = `
                 SELECT ST_X(ST_Centroid($2::geometry)) as merkez_lng, ST_Y(ST_Centroid($2::geometry)) as merkez_lat,
@@ -62,7 +62,7 @@ exports.analyzeRoute = async (req, res) => {
         });
 
     } catch (err) {
-        console.error("🔥 HATA:", err.message);
+        console.error("Sunucu hatası:", err.message);
         res.status(500).json({ error: err.message });
     }
 };
