@@ -7,42 +7,64 @@
 
 > **Veriye Dayalı Gelecek, Akılcı Ulaşım.**
 
-Bu proje, İzmir genelindeki toplu taşıma verilerini (yolcu hareketleri, durak konumları, demografik veriler) işleyerek yöneticilerin stratejik ve operasyonel kararlar almasını sağlayan web tabanlı bir **Karar Destek Sistemidir (DSS)**.
+İzmir genelindeki toplu taşıma verilerini (yolcu hareketleri, durak konumları, demografik veriler) analiz ederek yöneticilerin stratejik ve operasyonel kararlar almasını sağlayan web tabanlı bir **Karar Destek Sistemi (KDS / DSS)**.
 
 ---
 
 ## 📖 Proje Açıklaması
 
-Geleneksel raporlama sistemlerinden farklı olarak bu proje, sadece "geçmişte ne olduğunu" değil, **"gelecekte ne olacağını"** ve **"ne yapılması gerektiğini"** analiz eder. 
+Bu proje, klasik raporlama sistemlerinden farklı olarak yalnızca **geçmiş veriyi** incelemez; aynı zamanda **geleceğe yönelik tahminler üretir** ve **karar önerileri sunar**.
 
-Sistem; **Coğrafi Bilgi Sistemleri (CBS)**, **İstatistiksel Regresyon** ve **Kütle Çekim Modeli (Gravity Model)** gibi analitik yaklaşımları kullanarak hat planlama, fiyatlandırma ve sefer optimizasyonu konularında karar vericiye rehberlik eder.
+Sistem;  
+- **Coğrafi Bilgi Sistemleri (CBS / GIS)**  
+- **İstatistiksel Regresyon**  
+- **Kütle Çekim Modeli (Gravity Model)**  
 
-### 🚀 Temel Özellikler
-- **🔮 Gelecek Tahmini:** Lineer Regresyon ile önümüzdeki 12 ayın yolcu ve finansal projeksiyonu.
-- **🗺️ Senaryo Analizi:** Kütle Çekim Modeli ile iki ilçe arasındaki potansiyel yolcu etkileşim skoru.
-- **⚙️ Operasyonel Simülasyon:** Sefer sıklığı değişimlerinin maliyet ve bekleme süresine etkisinin anlık simülasyonu ("What-If" Analizi).
-- **🛡️ Veri Güvenliği:** Veritabanı seviyesinde Trigger'lar ile iş kurallarının denetlenmesi.
+gibi analitik yaklaşımlar kullanarak hat planlama, sefer sıklığı ve kaynak optimizasyonu konularında karar vericilere destek olur.
 
 ---
 
-## 🛠️ Kurulum Adımları
+## 🚀 Temel Özellikler
 
-Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
+- **🔮 Gelecek Tahmini**  
+  Lineer regresyon ile önümüzdeki 12 aya ait yolcu ve finansal projeksiyonlar.
 
-### 1. Ön Koşullar
+- **🗺️ Senaryo Analizi**  
+  Kütle Çekim Modeli kullanılarak ilçeler arası potansiyel yolcu etkileşim skorlarının hesaplanması.
+
+- **⚙️ Operasyonel Simülasyon**  
+  Sefer sıklığı değişikliklerinin maliyet ve bekleme süresine etkisinin “What-If” analizleri ile simülasyonu.
+
+- **🛡️ Veri Güvenliği**  
+  Veritabanı seviyesinde trigger’lar ile iş kurallarının ve veri bütünlüğünün korunması.
+
+---
+
+## 🛠️ Kurulum
+
+### Ön Koşullar
+
 - Node.js (v18+)
-- PostgreSQL (v14+) ve PostGIS Eklentisi
+- PostgreSQL (v14+)
+- PostGIS eklentisi
 
-### 2. Projeyi İndirin
+### Kurulum Adımları
+
 ```bash
-git clone [https://github.com/kullaniciadiniz/izmir-ulasim-kds.git](https://github.com/kullaniciadiniz/izmir-ulasim-kds.git)
+# Projeyi klonlayın
+git clone https://github.com/kullaniciadiniz/izmir-ulasim-kds.git
 cd izmir-ulasim-kds
 
-### 3. Çevre Değişkenlerini Ayarlayın
-Ana dizindeki .env.example dosyasının adını .env olarak değiştirin ve kendi PostgreSQL veritabanı bilgilerinizi girin.
+# Bağımlılıkları yükleyin
+npm install
 
-### 4. Veritabanını Hazırlayın
-PostgreSQL üzerinde izmir_ulasim adında bir veritabanı oluşturun ve db/ klasörü içinde verilen SQL yedeğini (backup) import edin. PostGIS eklentisinin aktif olduğundan emin olun.
+# Ortam değişkenlerini ayarlayın
+# .env.example dosyasını .env olarak yeniden adlandırın
+# ve PostgreSQL bilgilerinizi girin
 
-### 5. Uygulamayı Başlatın
+# PostgreSQL üzerinde izmir_ulasim adında bir veritabanı oluşturun
+# db/ klasörü içindeki SQL yedeğini import edin
+# PostGIS eklentisinin aktif olduğundan emin olun
 
+# Uygulamayı başlatın
+npm start
