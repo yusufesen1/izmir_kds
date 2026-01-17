@@ -39,7 +39,43 @@ gibi analitik yaklaşımlar kullanarak hat planlama, sefer sıklığı ve kaynak
   Veritabanı seviyesinde trigger’lar ile iş kurallarının ve veri bütünlüğünün korunması.
 
 ---
+## 📡 API Uç Noktaları (Endpoints)
 
+Proje **RESTful** mimariye uygun olarak tasarlanmıştır.
+
+### 🔐 Yönetim (Admin - CRUD)
+*Base URL: `/api/admin`*
+- `GET /api/admin/tariffs` - Tüm tarifeleri listele.
+- `POST /api/admin/tariffs` - Yeni tarife ekle.
+- `PUT /api/admin/tariffs/:id` - Tarife güncelle (İş kuralı denetimi var).
+- `DELETE /api/admin/tariffs/:id` - Tarife sil (Kritik veri koruması var).
+
+### 📊 Dashboard (Genel Görünüm)
+*Base URL: `/api`*
+- `GET /api/heatmap` - Yoğunluk haritası verileri.
+- `GET /api/yillik-ozet` - Yıllık yolcu/hat özeti.
+- `GET /api/top-duraklar` - En popüler duraklar.
+- `GET /api/top-liste` - En yoğun durakların listesi.
+
+### 🔮 Gelecek Tahmini (Forecast)
+*Base URL: `/api/forecast`*
+- `GET /api/forecast/projection-data` - 12 aylık regresyon tahmini.
+- `GET /api/forecast/district-growth` - İlçe büyüme potansiyelleri.
+
+### ⚙️ Operasyon (Operation)
+*Base URL: `/api/operation`*
+- `GET /api/operation/base-metrics` - Simülasyon için baz metrikler.
+
+### 🗺️ Senaryo Analizi (Scenario)
+*Base URL: `/api/scenario`*
+- `POST /api/scenario/analyze-route` - İki nokta arası etkileşim skoru hesapla.
+
+### ♿ Erişim ve Adalet (Access)
+*Base URL: `/api/access`*
+- `GET /api/access/scatter-data` - Erişim analizi verileri.
+- `GET /api/access/map-data` - Harita renklendirme (GeoJSON) verileri.
+- `GET /api/access/student-stops` - Öğrenci yoğunluklu duraklar.
+---
 ## 🛠️ Kurulum
 
 ### Ön Koşullar
@@ -68,3 +104,4 @@ npm install
 
 # Uygulamayı başlatın
 npm start
+
