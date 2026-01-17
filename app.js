@@ -14,12 +14,14 @@ const accessRouter = require('./routers/accessRouter');
 const forecastRouter = require('./routers/forecastRouter');
 const operationRouter = require('./routers/operationRouter');
 const scenarioRouter = require('./routers/scenarioRouter');
+const adminRouter = require('./routers/adminRouter');
 
 app.use('/api', dashboardRouter); 
 app.use('/api/access', accessRouter);
 app.use('/api/forecast', forecastRouter);
 app.use('/api/operation', operationRouter);
 app.use('/api/scenario', scenarioRouter);
+app.use('/api/admin', adminRouter);
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 app.get('/erisim', (req, res) => res.sendFile(path.join(__dirname, 'public', 'erisim.html')));
