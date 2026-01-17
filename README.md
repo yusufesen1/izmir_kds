@@ -37,3 +37,12 @@ Projeyi yerel makinenizde çalıştırmak için aşağıdaki adımları izleyin:
 ```bash
 git clone [https://github.com/kullaniciadiniz/izmir-ulasim-kds.git](https://github.com/kullaniciadiniz/izmir-ulasim-kds.git)
 cd izmir-ulasim-kds
+
+### 3. Çevre Değişkenlerini Ayarlayın
+Ana dizindeki .env.example dosyasının adını .env olarak değiştirin ve kendi PostgreSQL veritabanı bilgilerinizi girin.
+
+### 4. Veritabanını Hazırlayın
+PostgreSQL üzerinde izmir_ulasim adında bir veritabanı oluşturun ve db/ klasörü içinde verilen SQL yedeğini (backup) import edin. PostGIS eklentisinin aktif olduğundan emin olun.
+
+### 5. Uygulamayı Başlatın
+
